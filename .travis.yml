@@ -44,8 +44,8 @@ jobs:
           # - sudo vagrant up --provider=libvirt #Bring up all the images
           - sudo vagrant up --provider=libvirt oob-mgmt-server oob-mgmt-switch exit01 spine01 leaf01 server01 internet
           - sudo vagrant status
-          - vagrant ssh oob-mgmt-server
-          - hostnamectl status
+          # - vagrant ssh oob-mgmt-server
+          # - hostnamectl status
 after_success:
     - stage: Finalize
       script: sudo vagrant destroy -f
