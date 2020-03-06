@@ -1,5 +1,4 @@
 language: ruby
-# dist: xenial #16.04
 dist: bionic #18.04
 sudo: required
 rvm:
@@ -32,20 +31,14 @@ jobs:
           - vagrant box add CumulusCommunity/cumulus-vx --provider=libvirt
           - mkdir ./testdir && cd ./testdir
           - vagrant init CumulusCommunity/cumulus-vx
-          # - sudo vagrant up --provider=libvirt #Bring up all the images
           - sudo vagrant status
           - sudo virsh list --all #show all running KVM/libvirt VMs
-          # - sudo vagrant ssh -c "echo 'hola mundo'"
-          # - sudo vagrant box add centos/7 --provider=libvirt
           - vagrant box list #veridy installed boxes
           - git clone https://github.com/CumulusNetworks/cldemo-vagrant.git && cd cldemo-vagrant
           - cp ./Vagrantfile-kvm ./Vagrantfile #Copy the Vagrantfile-KVM into place
           - vagrant status #Check the status of the VMs to see that none of them have been created yet
-          # - sudo vagrant up --provider=libvirt #Bring up all the images
           - sudo vagrant up --provider=libvirt oob-mgmt-server oob-mgmt-switch exit01 spine01 leaf01 server01 internet
           - sudo vagrant status
-          # - vagrant ssh oob-mgmt-server
-          # - hostnamectl status
 after_success:
     - stage: Finalize
       script: sudo vagrant destroy -f
